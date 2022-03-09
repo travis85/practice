@@ -96,11 +96,11 @@ function reverseOnlyAlphabetical(str){
         } 
     }
     for(let i = 0; i < strSplit.length; i++){
-        if(strSplit[i].match(/[!$3]/gi)){
+        if(strSplit[i].match(/[^A-Za-z]/gi)){
             rev.splice(i,0,strSplit[i])
         }
     }
-    return rev
+    return rev.join('')
 }
 
 //TIME CONVERSION
@@ -321,27 +321,8 @@ function birthday(s, d, m) {
 // console.log(birthday([4], 4, 1))
 
 
-function divisibleSumPairs(n, k, ar) {
-    let counter = 0 
-    for(let i = 0; i < ar.length ; i++){
-        for(let j= 1; j < ar.length; j++){
-
-            let x = ar[i] + ar[j] / k;
-
-            if(x % k === 0){
-                counter++
-            }
-        }
-    }
-    return counter 
-
-}
- console.log(divisibleSumPairs(6,3,[1, 3, 2, 6, 1,2]))
-
-
-
 //10101010  00001111  00000000  11111111 (OUTPUT)
-// let x = [1,1,1,1,1,1,1,1 ,0,0,0,0,0,0,0,0 ,0,0,0,0,1,1,1,1 ,1,0,1,0,1,0,1,0] (INPUT)
+let x = [1,1,1,1,1,1,1,1 ,0,0,0,0,0,0,0,0 ,0,0,0,0,1,1,1,1 ,1,0,1,0,1,0,1,0] 
 let empty = []
 let start = 0
 let end = 8
@@ -355,3 +336,96 @@ while(start < x.length){
 
 //  console.log(empty)
 
+/**
+* Given an array of integers and a positive integer , determine the number of  pairs where  and  +  is divisible by .
+Example
+* n = 6, k = 3 ar = [1, 3, 2, 6, 1, 2] => 5
+ */
+function divisibleSumPairs(n, k, ar) {
+    let counter = 0 
+    let empty =[]
+    for(let i = 0; i < ar.length; i++){
+        for(let j= i+1; j < ar.length; j++){
+            let z = (ar[i] + ar[j]) % k;
+            if (j === ar.length){
+                break;
+            } else {
+                if (z === 0 && i != j){
+                empty.push(z)
+                counter++
+                console.log(counter,ar[i],ar[j])
+                }
+            }
+     
+        }
+    }
+    return empty.length
+
+}
+
+//  console.log(divisibleSumPairs(6,3,[1, 3, 2, 6, 1, 2]))
+// n = 6, k = 3 ar = [1, 3, 2, 6, 1, 2] => 5
+//2 2 [8,10]
+
+function reverseOnlyAlphabetical(str){
+    let strSplit = str.split('');
+    let rev = []
+
+    for(let i = 0; i < strSplit.length; i++){
+        if(strSplit[i].match(/[a-z]/gi)){
+            rev.unshift(strSplit[i])
+        } 
+    }
+    for(let i = 0; i < strSplit.length; i++){
+        if(strSplit[i].match(/[^A-Za-z]/gi)){
+            rev.splice(i,0,strSplit[i])
+        }
+    }
+    return rev.join('')
+}
+// console.log(reverseOnlyAlphabetical('sea!$hells3'));
+
+// You are given a string, write a method that will return True if that string is a palindrome and False if it is not. 
+// A palindrome is defined as “a word, phrase, or sequence that reads the same backward as forward”.
+// Assume that we will not have input strings that contain special characters or spaces.
+// For example, ‘racecar’ should return True
+
+//reverse 
+function isPal(str){
+    let rever = [];
+    for(let i =0; i < str.length; i++){
+        rever.unshift(str[i])
+    }
+    let x = rever.join('')
+    if(x === str){
+        return true
+    } else{
+        return false
+    }
+}
+// console.log(isPal('thisisnotapalindrome'))
+// console.log(isPal('racecar'));
+
+// You're given a string of random alphanumerical characters with a length between 0 and 1000. 
+// Write a method to return the first character in the string that does not repeat itself later on. 
+// For example, 'oh my god dude where is my car' should return 'g'
+function firstNonRepeat(str) {
+    let strSplit = str.split('') 
+    let unique ={}
+    for(const letter of strSplit){
+        if (unique[letter]){
+            unique[letter] += 1;
+        } else {
+            unique[letter] = 1
+        }
+    }    
+
+    solution = ''
+    for(letter in unique){
+        if(unique[letter] === 1){
+            solution += letter;
+            break;
+        }
+    }
+}
+console.log(firstNonRepeat('oh my god dude where is my car'))
