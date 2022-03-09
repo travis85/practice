@@ -428,4 +428,35 @@ function firstNonRepeat(str) {
         }
     }
 }
-console.log(firstNonRepeat('oh my god dude where is my car'))
+// console.log(firstNonRepeat('oh my god dude where is my car'))
+
+/**
+ *Given an array of bird sightings where every element represents a bird type id, determine the id of the most frequently sighted type. 
+ *If more than 1 type has been spotted that maximum amount, return the smallest of their ids.
+ *EXAMPLE: [1,1,2,2,3]
+ *There are two each of types 1 and 2, and one sighting of type 3. Pick the lower of the two types seen twice: type 1.
+*/
+function migratoryBirds(arr) {
+    let birdTypes = arr
+    let countedTypes ={};
+    for(const bird of birdTypes){
+        if(countedTypes[bird]){
+            countedTypes[bird] += 1;
+        } else {
+            countedTypes[bird] = 1
+        }
+    }
+    let vals = Object.values(countedTypes)
+    let highestVal = Math.max(...vals) 
+    let most = []
+
+    for(num in countedTypes){
+        if(countedTypes[num] === highestVal){
+            most.push(num)
+        }
+    }
+    return most[0]
+
+}
+console.log(migratoryBirds([1, 4, 4, 4 ,5 ,3]))
+//[1, 4, 4, 4 ,5 ,3] =>4
