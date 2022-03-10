@@ -448,8 +448,9 @@ function migratoryBirds(arr) {
     }
     let vals = Object.values(countedTypes)
     let highestVal = Math.max(...vals) 
-    let most = []
+    let most = [];
 
+    
     for(num in countedTypes){
         if(countedTypes[num] === highestVal){
             most.push(num)
@@ -458,5 +459,26 @@ function migratoryBirds(arr) {
     return most[0]
 
 }
-console.log(migratoryBirds([1, 4, 4, 4 ,5 ,3]))
-//[1, 4, 4, 4 ,5 ,3] =>4
+// console.log(migratoryBirds([1, 4, 4, 4 ,5 ,3]))
+
+
+//Russan julian -to- gregorian 
+function dayOfProgrammer(year) {
+    let nonLeap = 256 - 243 //13
+    let leap = 256 - 244//12
+    let JulianCal = year % 4 === 0
+    let GregorianCal = year % 400 === 0 || year % 4 === 0 && year % 100 !== 0
+
+    if(year <=1917 && JulianCal === true){
+        return `${leap}.09.${year}`;
+    } else if(year <= 1917 && JulianCal === false){
+        return `${nonLeap}.09.${year}`;
+    } else if(year >= 1919 && GregorianCal === true){
+        return `${leap}.09.${year}`;
+    } else if(year >= 1919 && GregorianCal === false) {
+        return `${nonLeap}.09.${year}`;
+    } else {
+        return `${nonLeap + 13}.09.${year}`;
+    }
+}
+//console.log(dayOfProgrammer(1918))
