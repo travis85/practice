@@ -506,7 +506,6 @@ function bonAppetit(bill, k, b) {
 //find the number of pairs of socks
 function sockMerchant(n, ar) {
     let counterArr = {}
-    
     ar.forEach((num =>{
         if(num in counterArr){
             counterArr[num] += 1
@@ -514,21 +513,50 @@ function sockMerchant(n, ar) {
             counterArr[num] = 1
         }
     }))
-
     let pairs = []
     for(let num in counterArr){
         let even = counterArr[num] % 2 === 0
         let divided = counterArr[num] / 2
         if(even === true){
             pairs.push(divided)
-
         } else {
             pairs.push(Math.floor(divided))
         }
-        
     }
-    return pairs.reduce((a,b)=>  a + b, 0)
+    return pairs.reduce((a,b) =>  a + b, 0)
 }
-console.log(sockMerchant(9 ,[10, 20, 20, 10, 10, 30, 50, 10, 20]))
+// console.log(sockMerchant(9 ,[10, 20, 20, 10, 10, 30, 50, 10, 20]))
 
 
+//return the least pages will need to turn starting from the front or back
+function pageCount(n, p) {
+    let even = n % 2 === 0
+    let startBack = n - p;
+    let startFront = p - 1;
+    let counter = 0;
+    let countUp = 0;
+    let countDown = n;
+
+    if(startFront < startBack){
+        while(p >= countUp){
+            countUp += 2
+            counter++
+        }
+        return counter-1
+    } else if(even === true && n === p + 1){
+        return 1
+    } else {
+        while(countDown >= p){
+            countDown += -2
+            counter++
+        }
+        return counter-1
+    }
+}
+console.log(pageCount(7, 4))
+//37455,29835 => 3810
+//6 4 => 1
+//6 , 2 => 1
+//5, 4 => 0
+//7, 4 => 1
+//6,5 =>1
