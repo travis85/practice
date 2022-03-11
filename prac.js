@@ -482,3 +482,53 @@ function dayOfProgrammer(year) {
     }
 }
 //console.log(dayOfProgrammer(1918))
+
+
+//if correct return bonAppetit
+//else print how much he owes anna
+function bonAppetit(bill, k, b) {
+    bill.splice(k,1)
+    
+    let reduc = bill.reduce((a , b) =>  a + b, 0) / 2
+     
+    if(reduc === b){
+        console.log("Bon Appetit") 
+    }  else{
+        let bOwes = b - reduc
+        console.log(bOwes)
+    }    
+
+}
+
+// console.log(bonAppetit( [3, 10, 2, 9],1, 12))
+
+
+//find the number of pairs of socks
+function sockMerchant(n, ar) {
+    let counterArr = {}
+    
+    ar.forEach((num =>{
+        if(num in counterArr){
+            counterArr[num] += 1
+        } else {
+            counterArr[num] = 1
+        }
+    }))
+
+    let pairs = []
+    for(let num in counterArr){
+        let even = counterArr[num] % 2 === 0
+        let divided = counterArr[num] / 2
+        if(even === true){
+            pairs.push(divided)
+
+        } else {
+            pairs.push(Math.floor(divided))
+        }
+        
+    }
+    return pairs.reduce((a,b)=>  a + b, 0)
+}
+console.log(sockMerchant(9 ,[10, 20, 20, 10, 10, 30, 50, 10, 20]))
+
+
