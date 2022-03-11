@@ -427,6 +427,7 @@ function firstNonRepeat(str) {
             break;
         }
     }
+    return solution
 }
 // console.log(firstNonRepeat('oh my god dude where is my car'))
 
@@ -553,10 +554,70 @@ function pageCount(n, p) {
         return counter-1
     }
 }
-console.log(pageCount(7, 4))
+// console.log(pageCount(7, 4))
 //37455,29835 => 3810
 //6 4 => 1
 //6 , 2 => 1
 //5, 4 => 0
 //7, 4 => 1
 //6,5 =>1
+
+//count how many vallys transversed
+//count whenever number went from negative to zero
+//map
+function countingValleys(steps, path) {
+    let counter = 0
+    let vallyTransversed = 0-1;
+    for(let i = 0; i < path.length; i++){
+        if(path[i] === 'U'){
+            counter++
+
+        } else {
+            path[i] === 'D'
+            counter--
+        }
+        if(counter === 0 && path.lastIndexOf(path[i] === 'U')){
+            vallyTransversed++
+        }
+    }
+    return vallyTransversed
+}
+// console.log(countingValleys(8,'UDDDUDUU'))
+
+
+
+let cpdomains = ["900 google.mail.com", "50 yahoo.com", "1 intel.mail.com", "5 wiki.org"]
+// Output: ["901 mail.com","50 yahoo.com","900 google.mail.com","5 wiki.org","5 org","1 intel.mail.com","951 com"]
+function getSplit(domain) {
+    let spl = domain.split(' ')
+    let num = spl[0]
+    let spl1 = spl[1].split('.')
+    spl1 = spl1.reverse()
+    let obj = []
+    
+    for(let i = 0; i < spl1.length; i++){
+    
+       [obj[spl1.slice(0,i+1).reverse().join('.')] = parseInt(num)]
+
+    }
+    return obj
+}
+
+let domSplit = []//[{ google: 900, mail: 900, com: 900 },{ yahoo: 50, com: 50 },.....]
+for(let i = 0; i < cpdomains.length; i++){
+    let domArr =  getSplit(cpdomains[i]);
+    let k = Object.keys(domArr)
+    let v = Object.values(domArr)
+    for(let j = 0; j < k.length; j++){
+        if(k[j] in domSplit){
+            domSplit[k[j]] += v[j]
+        } else{
+            domSplit[k[j]] = v[j]
+        }
+
+    }
+
+}
+console.log(domSplit);
+
+
