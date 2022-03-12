@@ -583,7 +583,7 @@ function countingValleys(steps, path) {
     }
     return vallyTransversed
 }
- console.log(countingValleys(8,'UDDDUDUU'))
+//  console.log(countingValleys(8,'UDDDUDUU'))
 
 
 
@@ -616,5 +616,27 @@ for(let i = 0; i < cpdomains.length; i++){
     }
 }
 // console.log(domSplit);
+
+//https://www.hackerrank.com/challenges/electronics-shop/problem?isFullScreen=true&h_r=next-challenge&h_v=zen
+function getMoneySpent(keyboards, drives, b) {
+    let add = ((a,b) => a+b)
+    let highest = []
+
+    for(let i = 0; i < keyboards.length; i++){
+        for(let j = 0; j < drives.length; j++){
+            let added = add(keyboards[i],drives[j])
+            if(added <= b){
+                highest.push(added)        
+            } 
+        }
+    }
+    if(highest.length === 0){
+        return -1
+    } else {
+        return Math.max(...highest)
+    }
+
+}
+console.log(getMoneySpent([3 ,1], [5,2 ,8], 10))
 
 
