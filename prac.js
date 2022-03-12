@@ -567,7 +567,7 @@ function pageCount(n, p) {
 //map
 function countingValleys(steps, path) {
     let counter = 0
-    let vallyTransversed = 0-1;
+    let vallyTransversed = 0;
     for(let i = 0; i < path.length; i++){
         if(path[i] === 'U'){
             counter++
@@ -576,13 +576,14 @@ function countingValleys(steps, path) {
             path[i] === 'D'
             counter--
         }
-        if(counter === 0 && path.lastIndexOf(path[i] === 'U')){
+        if(counter === -1 && path[i+1] === 'U'){
             vallyTransversed++
+
         }
     }
     return vallyTransversed
 }
-// console.log(countingValleys(8,'UDDDUDUU'))
+ console.log(countingValleys(8,'UDDDUDUU'))
 
 
 
@@ -594,11 +595,9 @@ function getSplit(domain) {
     let spl1 = spl[1].split('.')
     spl1 = spl1.reverse()
     let obj = []
-    
     for(let i = 0; i < spl1.length; i++){
     
        [obj[spl1.slice(0,i+1).reverse().join('.')] = parseInt(num)]
-
     }
     return obj
 }
@@ -614,10 +613,8 @@ for(let i = 0; i < cpdomains.length; i++){
         } else{
             domSplit[k[j]] = v[j]
         }
-
     }
-
 }
-console.log(domSplit);
+// console.log(domSplit);
 
 
