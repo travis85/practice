@@ -589,6 +589,12 @@ function countingValleys(steps, path) {
 
 let cpdomains = ["900 google.mail.com", "50 yahoo.com", "1 intel.mail.com", "5 wiki.org"]
 // Output: ["901 mail.com","50 yahoo.com","900 google.mail.com","5 wiki.org","5 org","1 intel.mail.com","951 com"]
+
+/**
+ * 
+ * @param {string} domain 
+ * @returns {object} 
+ */
 function getSplit(domain) {
     let spl = domain.split(' ')
     let num = spl[0]
@@ -637,6 +643,29 @@ function getMoneySpent(keyboards, drives, b) {
     }
 
 }
-console.log(getMoneySpent([3 ,1], [5,2 ,8], 10))
+// console.log(getMoneySpent([3 ,1], [5,2 ,8], 10))
 
 
+
+/**
+ * 
+ * @param {string} magazine 
+ * @param {string} note 
+ * All words in note MUST match Case sensitive
+ */
+function checkMagazine(magazine, note) {
+    let noteSplit = note.split(' ');
+    let magSplit = magazine.split(' ');
+    let counter = 0;
+
+    for(let i =0; i < magSplit.length; i++){
+        if(note.includes(magSplit[i]))
+        counter++
+    }
+    if(counter === noteSplit.length){
+        console.log('Yes') 
+    } else { 
+        console.log('NO') 
+    }
+}
+console.log(checkMagazine('give me one grand today night','give one grand today'))
