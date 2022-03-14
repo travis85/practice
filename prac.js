@@ -668,4 +668,27 @@ function checkMagazine(magazine, note) {
         console.log('NO') 
     }
 }
-console.log(checkMagazine('give me one grand today night','give one grand today'))
+// console.log(checkMagazine('give me one grand today night','give one grand today'))
+
+/**
+ * 
+ * @param {int} x represent the position of cat A
+ * @param {int} y represent the position of cat B
+ * @param {int} z represent the position of mouse 
+ * see which cat reaches the mouse 1st if they both reach at same time return mouse
+ */
+function catAndMouse(x, y, z) {
+    let subtract = ((a,b) => Math.abs(a - b));
+
+    if(subtract(x,z) < subtract(y,z)){
+        return ('Cat A')
+    } else if (subtract(x,z) > subtract(y,z)){
+        return ('Cat B')
+    } else {
+        return ('Mouse C')
+    }
+}
+// console.log(catAndMouse(1,2,3))
+
+
+
