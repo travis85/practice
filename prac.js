@@ -690,5 +690,82 @@ function catAndMouse(x, y, z) {
 }
 // console.log(catAndMouse(1,2,3))
 
+// Given two strings, one named sub and the other str, determine if sub is a subsequence of str.
+// A subsequence is a substring, but the letters don't have to be adjacent. It is formed from the
+// base string by deleting some or none of the characters without affecting the relative positions 
+// of the other letters.
+// For example, "hen" is a subsequence of "chicken" by removing "c", "i", "c", "k"
 
+function isSubsequence(base, sub) {
+    let bSplit = base.split('')
+    let subSplit = sub.split('')
+
+    let match = []
+    let matchIndex = 0
+    for(let i = 0; i < subSplit.length; i++){
+        for(let j = 0; j < bSplit.length; j++){
+            if(subSplit[i] === bSplit[j] && bSplit.indexOf(bSplit[j]) > matchIndex){
+                matchIndex = j
+                match.push(bSplit[j])
+            }
+        }
+    }
+
+
+    if(match.join('') === sub){
+
+        return true
+    } else{
+        return false
+    }
+
+
+}
+// console.log(isSubsequence('chicken', 'hen')); // return true
+// console.log(isSubsequence('chart', 'rat')); //return false
+
+
+
+
+/**
+ * return the magic square that has the least total of numbers change to make square
+ * @param {array[]} s 
+ * @returns int
+ */
+function formingMagicSquare(s) {
+    let arrFlat = s.flat()
+    let subtract = ((a,b) =>  Math.abs(a - b))
+    let allMagic = [
+        [8, 1, 6, 3, 5, 7, 4, 9, 2],
+        [6, 1, 8, 7, 5, 3, 2, 9, 4],
+        [4, 9, 2, 3, 5, 7, 8, 1, 6],
+        [2, 9, 4, 7, 5, 3, 6, 1, 8],
+        [8, 3, 4, 1, 5, 9, 6, 7, 2],
+        [4, 3, 8, 9, 5, 1, 2, 7, 6],
+        [6, 7, 2, 1, 5, 9, 8, 3, 4],
+        [2, 7, 6, 9, 5, 1, 4, 3, 8]
+    ]
+ 
+    let mostMagic = 100
+    for(let i = 0; i < allMagic.length+1; i++){
+        let total = 0
+        if( i === allMagic.length){
+            return mostMagic 
+        } 
+        for(let j = 0; j < allMagic.length+1; j++){
+
+            total += subtract(arrFlat[j],allMagic[i][j])
+
+            if(j === allMagic.length){
+
+                if(mostMagic > total){
+                    mostMagic = total
+                }
+                
+            } 
+        }
+
+    }
+}
+console.log(formingMagicSquare([[4, 8, 2],[4, 5, 7],[6, 1, 6]]))
 
