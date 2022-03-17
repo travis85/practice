@@ -767,5 +767,35 @@ function formingMagicSquare(s) {
 
     }
 }
-console.log(formingMagicSquare([[4, 8, 2],[4, 5, 7],[6, 1, 6]]))
+// console.log(formingMagicSquare([[4, 8, 2],[4, 5, 7],[6, 1, 6]]))
 
+
+/**
+ * 
+ * @param {int[]} a 
+ * @returns int of representing the longest subrarr i can make with the given arr
+ */
+function pickingNumbers(a) {
+    let sorted = a.sort();
+    let subtract = ((a,b) =>  Math.abs(a - b));
+    let longest = 0;
+    console.log(sorted); 
+    let i = 0;
+    let j = 1;
+    
+
+    while(i < sorted.length && j < sorted.length){
+        if(subtract(a[i],a[j]) > 1){
+            i = j
+        } else{
+            if(subtract(j,i) > longest){
+                longest = subtract(j,i)
+            }
+        }
+        j++    
+    }
+    return longest+1;
+}
+console.log(pickingNumbers([4, 6, 5, 3, 3, 1]))
+//4 6 5 3 3 1 =>3
+//1 2 2 3 1 2 =>5
