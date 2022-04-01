@@ -653,22 +653,37 @@ function getMoneySpent(keyboards, drives, b) {
  * @param {string} note 
  * All words in note MUST match Case sensitive
  */
+//
 function checkMagazine(magazine, note) {
-    let noteSplit = note.split(' ');
-    let magSplit = magazine.split(' ');
-    let counter = 0;
 
-    for(let i =0; i < magSplit.length; i++){
-        if(note.includes(magSplit[i]))
-        counter++
+    function wordCount(arr){
+        let obj = {};
+        for(word in arr){
+            if(word in obj){
+                obj[word] += 1;
+
+            }else {
+                obj[word] = 1
+            }
+        }
+        return obj
     }
-    if(counter === noteSplit.length){
-        console.log('Yes') 
-    } else { 
-        console.log('NO') 
+
+    let magCount = wordCount(magazine)
+    let noteCount = wordCount(note)
+
+    for(word in noteCount){
+        let val = magCount[word]
+        if(word in magCount && noteCount[word] <= val){
+            continue
+        } else{
+            return 'No'
+        }
     }
+
+    return 'Yes'
 }
-// console.log(checkMagazine('give me one grand today night','give one grand today'))
+//  console.log(checkMagazine([ 'two', 'times', 'three', 'is', 'not', 'four'],[ 'two' ,'times' ,'two' ,'is' ,'four' ]))
 
 /**
  * 
@@ -784,7 +799,7 @@ function pickingNumbers(a) {
     let j = 1;
     
 
-    while(i < sorted.length && j < sorted.length){
+    while( i < sorted.length && j < sorted.length){
         if(subtract(a[i],a[j]) > 1){
             i = j
         } else{
@@ -796,6 +811,431 @@ function pickingNumbers(a) {
     }
     return longest+1;
 }
-console.log(pickingNumbers([4, 6, 5, 3, 3, 1]))
+// console.log(pickingNumbers([4, 6, 5, 3, 3, 1]))
 //4 6 5 3 3 1 =>3
 //1 2 2 3 1 2 =>5
+
+function climbingLeaderboard(ranked, player) {
+    let scoreRanks = []//returning all ranks
+    let noDups  = [...new Set(ranked)]
+    
+
+    function remove(array, element) {
+        const index = array.indexOf(element);
+        array.splice(index, 1);
+    }   
+
+    function ifThere(arr, val) {
+        return arr.some(arrVal => val === arrVal);
+    } 
+
+    let i = 0 
+    while( i < player.length){
+        if(ifThere(noDups, player[i]) === true){
+            let found = noDups.find(num => num === player[i])
+            let index = noDups.findIndex(num => num === found)
+            scoreRanks.push(index)
+            remove(noDups,player[i])
+
+        } else {
+            noDups.push(player[i])
+            noDups.sort((a,b) => b - a)
+            scoreRanks.push(noDups.indexOf(player[i]))
+            remove(noDups,player[i])
+        }//account for all her scores in 1st place
+        i++
+        if(i === player.length-1){
+            break
+        }
+    } 
+    return scoreRanks.map(num => num + 1)
+
+}
+
+
+// console.log(climbingLeaderboard([100, 90, 90, 80, 75, 60], [50, 65, 77, 90, 102]))
+// console.log(climbingLeaderboard([100 ,100, 50, 40, 40, 20, 10], [5 ,25 ,50 ,120]))
+
+
+
+function splitnum(string) {//organizingContainers
+    let z = []
+    let x = string.split('')
+    x.forEach(num => {
+        z.push(parseInt(num))
+    })
+    return z
+}
+
+function organizingContainers(container) {
+
+    let container1 = []
+    let container2 = []
+    let container3 = []
+
+    container.forEach( num =>{
+        container1.push(num[0])
+        container2.push(num[1])
+        container3.push(num.splice(2))
+    })
+
+    function checkIfBothEvenOrOdd(num1,num2){
+        if(num1 % 2 === 0 && num2 % 2 === 0){
+            return true
+        } else if(num1 % 2 !== 0 && num2 % 2 !== 0){
+            return true
+        }
+    }
+
+    function arrFiltered(arr){
+        let newArr = []
+        arr.forEach((num)=>{
+            if(Number.isInteger(num) === true){
+                newArr.push(num)
+            } 
+        })
+        return newArr
+    }
+    let x = arrFiltered(container3.flat())
+
+    let containFlat1 = container1.flat().reduce((a,b ) => a + b, 0)
+    let containFlat2 = container2.flat().reduce((a,b) => a + b, 0)
+    let containFlat3 = x.reduce((a,b) => a + b, 0)
+    // console.log(containFlat1,containFlat2,containFlat3)
+    if(containFlat3 > 0){
+        if(checkIfBothEvenOrOdd(containFlat1,containFlat2) === true && containFlat3 % 2 === 0){
+            return "Possible"
+        } else {
+            return "Impossible"
+        }
+    } else {
+        if(checkIfBothEvenOrOdd(containFlat1,containFlat2 ) === true && containFlat1 !== 0 || containFlat2 !== 0){
+            return "Possible"
+        } else {
+            return "Impossible"
+        }
+
+    }
+
+     
+}
+
+// console.log(organizingContainers([splitnum('997612619'), splitnum('934920795'),splitnum('998879231'), splitnum('999926463')])) //pos
+// console.log(organizingContainers([splitnum('960369681'), splitnum('997828120'),splitnum('999792735'), splitnum('979622676')]))//impos
+
+// //  console.log(organizingContainers([splitnum('999336263 '), splitnum('998799923')]))
+// //  console.log(organizingContainers([splitnum('998799923 '), splitnum('999763019')]))
+
+
+
+
+/**
+ * 
+ * @param {speacial characters} string 
+ * @returns if the string of special chars are matched equally and inthe correct order
+ */
+function checkSymbol2(string) {
+    if(string.length % 2 !=0 || string.length <=0) {
+        return false
+    }
+    const halfway_idx = string.length / 2;
+
+    opposite_symbols = {
+        '(': ')',
+        '[': ']',
+        '{': '}'
+    }
+
+    let i=0;
+    let j=string.length - 1;
+    while( i < halfway_idx) {
+        if( opposite_symbols[string[i]] != string[j]) {
+            return false
+        }
+        i += 1
+        j -= 1
+    }
+    return true
+}
+// console.log(checkSymbol2("{[}]"))
+//  console.log(checkSymbol2("[[}}"))
+
+
+/**
+ * 
+ * @param {*} words 
+ * @param {*} chars 
+ * @returns 
+ */
+var countCharacters = function(words, chars) {
+    function getCharCount(string) {
+        let count = {}
+        for(let char of string){
+            if(char in count){
+                count[char] += 1
+            } else {
+                count[char] = 1
+            }
+        }
+        return count
+    }
+    
+    function canFormWord(word, characterCount){
+    
+        let wordCount = getCharCount(word)
+        let wordKeys = Object.keys(wordCount)
+        
+        for(let wordletter of wordKeys){
+            let letterCount = wordCount[wordletter]
+            let charCount = characterCount[wordletter]
+    
+            if(charCount === undefined){
+                return false
+            }
+            else if(letterCount > charCount){
+                return false
+            } 
+        }
+        return true
+    }
+    
+    let validWords = []
+    let characterCount = getCharCount(chars)
+
+    for(let word of words){
+        
+        if(canFormWord(word,characterCount) === true){
+            validWords.push(word)
+        }      
+    }    
+    let total = 0
+    validWords.forEach(word => {
+        total += word.length
+    })
+    return total
+}
+
+/**
+ * 
+ * @param {array Int} arr1 
+ * @param {array int} arr2 
+ * subtracts index[0]'s .. then substacts index[1]
+ * @returns returns the sum of both 
+ */
+function ManhattenDistance(arr1,arr2){
+    let botharr = [arr1,arr2]
+    let axisY = []
+    let axisX = []
+    let i = 0
+    botharr.forEach((axis) => {
+        axisX.push(axis[0])
+        axisY.push(axis[1])
+    })
+    let y = axisY.reduce((b,a) => Math.abs(a - b, 0))
+    let x = axisX.reduce((b,a) => Math.abs(a-b,0))
+    
+    return Math.abs(y + x)
+
+}
+// console.log(ManhattenDistance([2,5],[3,1]))
+
+
+/**
+ * 
+ * @param {imt} num 
+ * @returns a string with dollar sign and 2 decimals ponits
+ */
+function numFloat(num){
+    return '$' + Number.parseFloat(num).toFixed(2);      
+}
+
+
+// Let's say you're given an array of stock prices, with each element being an
+// integer that represents a price in dollars.
+// For example: [ 10, 7, 6, 2, 9, 4 ]
+// Day 1 - $10, Day 2 - $7, Day 3 $6... 
+// Optimal price - $7 (Buy at $2, Sell at $9)
+// Each index of the array represents a single day, and the the element at that 
+// index is the stock price for that given day.
+// Given the ability to only buy once and sell once, our goal is to maximize the 
+// amount of profit (selling price - purchase price) that we can attain and return
+// that value. Note the only caveat is that that we cannot sell a stock before we buy it.
+
+// [9, 8, 6, 5, 3] should return 0
+// [15, 5, 2, 0, 5, 8, 7, 4, 2, 10, 1] should return 10
+
+function stockPrices(arr){
+    let buy = arr[0]
+    let sell = 0
+
+    for(let i = 1; i < arr.length; i++){
+        if(arr[i] < buy){
+            buy = arr[i]
+        } else {
+            if(arr[i] > arr[i+1]  ){
+                sell = arr[i]  
+            }
+        }
+
+    }
+    
+    profit = sell - buy
+    if(profit > 0){
+        return sell - buy
+    }
+    return 0
+}
+// console.log(stockPrices([ 10, 7, 6, 2, 9, 4 ]))
+// console.log(stockPrices([9, 8, 6, 5, 3]))
+// console.log(stockPrices([15, 5, 2, 0, 5, 8, 7, 4, 2, 10, 1]))
+
+function equalizeArray(arr) {
+
+    let obj = {}
+
+    for(let num of arr){
+        if(num in obj){
+            obj[num] += 1
+        } else {
+            obj[num] = 1
+        }
+    }
+    let values = Object.values(obj)
+    let most = Math.max(...values)
+    return  arr.length - most
+
+}
+// console.log(equalizeArray([3,3,4,5,4,4,1,4]))
+
+function queensAttack(n, k, r_q, c_q, obstacles) {
+    let counter = 0
+
+    let i = r_q
+    let j = c_q
+    let o = 0
+    let queensPosition = [i,j]
+
+    while (i < n || j < n){
+        if(queensPosition === obstacles[o] ){
+            break
+        } else {
+            i++
+            j++
+            o++
+            counter++
+        }
+        if(queensPosition === obstacles[o] ){
+            break
+        } else {
+            i--
+            j--
+            o++
+            counter++
+        }
+        if(queensPosition === obstacles[o] || i < n+1){
+            break
+        } else{
+            i++
+            o++
+            counter++
+        }
+        if(queensPosition === obstacles[o] || i > 0){
+            break
+        } else {
+            i-- 
+            o++
+            counter++
+
+        }
+        if(queensPosition === obstacles[o] || j < n+1){
+            break
+        } else {
+            j++
+            o++
+            counter++
+
+        }
+        if(queensPosition === obstacles[o] || j > 0){
+            break
+        } else {
+            j-- 
+            o++
+            counter++
+
+        }
+
+
+    }
+    console.log(counter)
+
+}
+// console.log(queensAttack(5,3,4,3,[[5, 5], [4, 2], [2, 3]]))
+
+function longestString(arr){
+    let longest = arr[0]
+    for(let i = 1; i< arr.length; i++){
+        if(arr[i].length > longest.length){
+            longest = arr[i]
+        }
+    }
+    return longest
+
+}
+// console.log(longestString([]))
+
+}
+
+
+function mostOften(string){
+    let newString = string.toUpperCase()
+    let obj = {}
+    for(let char of newString){
+        if(char in obj){
+            obj[char] += 1;
+
+        }else{
+            obj[char] = 1;
+
+        }
+    }
+
+    return Object.keys(obj).reduce(function(a, b){ return obj[a] > obj[b] ? a : b });
+}
+// console.log(mostOften("ijbphCOWOAJNVQNVOHQEFBIUPWDVNVO"))
+
+
+
+function anagram(str1, str2){
+    if(str1.length != str2.length){
+        return false
+    }
+    let str1Obj = {}
+    let str2Obj = {}
+
+    for(let charac of str1){
+        if(charac in str1Obj){
+            str1Obj[charac] += 1;
+        } else {
+            str1Obj[charac] = 1;
+        }
+    }
+    for(let charac of str2){
+        if(charac in str2Obj){
+            str2Obj[charac] += 1;
+        } else {
+            str2Obj[charac] = 1;
+        }
+    }
+
+    for(let letter in str1Obj){
+        if(str1Obj[letter] != str2Obj[letter]){
+            return false
+        }   
+    }
+
+    return true
+
+
+}
+// console.log(anagram('abba','baab'))
+
