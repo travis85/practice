@@ -1166,7 +1166,7 @@ function queensAttack(n, k, r_q, c_q, obstacles) {
 
 
     }
-    console.log(counter)
+    // console.log(counter)
 
 }
 // console.log(queensAttack(5,3,4,3,[[5, 5], [4, 2], [2, 3]]))
@@ -1183,7 +1183,7 @@ function longestString(arr){
 }
 // console.log(longestString([]))
 
-}
+
 
 
 function mostOften(string){
@@ -1232,10 +1232,51 @@ function anagram(str1, str2){
             return false
         }   
     }
-
     return true
-
-
 }
 // console.log(anagram('abba','baab'))
 
+
+//log_hit func
+//git_hits
+//called evertime
+//time stamp
+let hits = []
+
+function logHit(){
+    pruneHits()
+    hits.push(new Date().getTime())
+
+}
+
+//last 5 min
+function getHits(){
+    pruneHits()
+    let currentTime = new Date().getTime()
+    let fiveMin = new Date()
+    fiveMin.setMilliseconds(300000)
+    let fiveMinAgo = currentTime - fiveMin
+
+    hits.forEach(hit =>{
+        let counter = 0
+        if(hit <= fiveMinAgo){
+            counter++
+        }
+    })
+    return counter
+}
+
+function pruneHits(){
+    let newHits = []
+    let currentTime = new Date().getTime()
+    let fiveMin = new Date()
+    fiveMin.setMilliseconds(300000)
+    let fiveMinAgo = currentTime - fiveMin
+
+    hits.forEach(hit => {
+        if(hit <= fiveMinAgo){
+            newHits.push(hit)
+        }
+    })
+   hits = newHits 
+}
