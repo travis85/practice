@@ -1246,7 +1246,6 @@ let hits = []
 function logHit(){
     pruneHits()
     hits.push(new Date().getTime())
-
 }
 
 //last 5 min
@@ -1280,3 +1279,34 @@ function pruneHits(){
     })
    hits = newHits 
 }
+
+
+//make heldnum 2 and add it to total
+//addng 2 to our our heldNum and adding taht num number to total 
+function findFirstNum(n){
+    let counter = 1
+    let heldNum = 2
+    let total = 1
+    while(counter < n){
+        total = total + heldNum
+        counter++
+        heldNum += 2
+    }
+    return total
+}
+//take heldNum and count up by 2 until n, adding it to total
+
+function theOddTriangle(n){
+    let counter = 0
+    let heldNum = findFirstNum(n)
+    let total = []
+
+    while(counter < n){
+        total.push(heldNum)
+        heldNum += 2
+        counter++
+    }
+    return total.reduce((a,b) => a + b, 0)
+
+}
+ console.log(theOddTriangle(3))
