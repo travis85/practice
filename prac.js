@@ -1107,69 +1107,186 @@ function equalizeArray(arr) {
 }
 // console.log(equalizeArray([3,3,4,5,4,4,1,4]))
 
+
+
+
+
+
 function queensAttack(n, k, r_q, c_q, obstacles) {
-    let counter = 0
+    let count = 0
 
-    let i = r_q
-    let j = c_q
-    let o = 0
-    let queensPosition = [i,j]
+    function minusObsticles(horizontal, verticle, obstacles){
+        for(let i = 0; i < obstacles.length; i++){
+            if(obstacles[i][0] === horizontal && obstacles[i][1] === verticle){
+            return true ;
+            }
+        }
+    }
 
-    while (i < n || j < n){
-        if(queensPosition === obstacles[o] ){
-            break
-        } else {
-            i++
-            j++
-            o++
-            counter++
-        }
-        if(queensPosition === obstacles[o] ){
-            break
-        } else {
-            i--
-            j--
-            o++
-            counter++
-        }
-        if(queensPosition === obstacles[o] || i < n+1){
-            break
-        } else{
-            i++
-            o++
-            counter++
-        }
-        if(queensPosition === obstacles[o] || i > 0){
-            break
-        } else {
-            i-- 
-            o++
-            counter++
+    function DiagnolUpRight(k, horizontal, verticle, boardSize, obstacles){
 
+        while(horizontal < boardSize +1 && verticle < boardSize +1 ){
+            if(k > 0){
+                if(minusObsticles(horizontal, verticle, obstacles) === true){
+                    break;
+                }
+                count++
+                horizontal++
+                verticle++
+            }else{
+                count++
+                horizontal++
+                verticle++
+            }
         }
-        if(queensPosition === obstacles[o] || j < n+1){
-            break
-        } else {
-            j++
-            o++
-            counter++
+    }
+    DiagnolUpRight(k, r_q, c_q, n, obstacles)
 
+    
+    function DiagnoldownRight(k, horizontal, verticle, boardSize, obstacles){
+
+        while(horizontal < boardSize +1 && verticle > 0){
+            if(k > 0){
+                if(minusObsticles(horizontal, verticle, obstacles) === true){
+                    break;
+                }
+                count++
+                horizontal++
+                verticle--
+    
+            }else{
+                count++
+                horizontal++
+                verticle--
+            }
         }
-        if(queensPosition === obstacles[o] || j > 0){
-            break
-        } else {
-            j-- 
-            o++
-            counter++
+    }
+    DiagnoldownRight(k, r_q, c_q, n,obstacles)
 
+    function DiagnolUpLeft(k, horizontal, verticle, boardSize, obstacles){
+
+        while(horizontal > 0 && verticle < boardSize +1 ){
+            if(k > 0){
+                if(minusObsticles(horizontal, verticle, obstacles) === true){
+                    break;
+                }
+                count++
+                horizontal--
+                verticle++
+            }else{
+                count++
+                horizontal--
+                verticle++
+    
+            }
         }
+    }
+    DiagnolUpLeft(k, r_q, c_q, n, obstacles)
 
+    function DiagnolDownLeft(k, horizontal, verticle, obstacles){
+
+        while(horizontal > 0 && verticle > 0){
+            if(k > 0){
+                if(minusObsticles(horizontal, verticle, obstacles) === true){
+                    break;
+                }
+                count++
+                horizontal--
+                verticle--
+            }else{
+                count++
+                horizontal--
+                verticle--
+    
+            }
+        }
+    }
+    DiagnolDownLeft(k, r_q, c_q, obstacles)
+
+    function VerticleUp(k, horizontal, verticle, boardSize, obstacles){
+        while(verticle < boardSize+1){
+            if(k > 0){
+                if(minusObsticles(horizontal, verticle, obstacles) === true){
+                    break;
+                }
+                count++
+                verticle++
+            }else{
+                count++
+                verticle++
+            }
+        }
+    }
+    VerticleUp(k, r_q, c_q, n, obstacles )
+
+    function VerticleDown(k, horizontal, verticle, obstacles){
+
+        while(verticle > 0){
+            if(k > 0){
+                if(minusObsticles(horizontal, verticle, obstacles) === true){
+                    break;
+                }
+                count++
+                verticle--
+    
+            }else{
+                count++
+                verticle--
+            }
+        }
 
     }
-    // console.log(counter)
+    VerticleDown(k, r_q, c_q, obstacles)
 
+
+    function horizontalLeft(k, horizontal,verticle, obstacles){
+
+        while(horizontal > 0){
+            if(k > 0){
+                if(minusObsticles(horizontal, verticle, obstacles) === true){
+                    break;
+                }
+                count++
+                horizontal--
+            }else{
+                count++
+                horizontal--
+    
+            }
+        }
+    }
+    horizontalLeft(k, r_q,c_q, obstacles)
+
+    function horizontalRight(k, horizontal,verticle, boardSize,obstacles){
+
+        while(horizontal < boardSize+1){
+            if(k > 0){
+                if(minusObsticles(horizontal, verticle, obstacles) === true){
+                    break;
+                }
+                horizontal++
+                count++
+    
+            } else{
+                horizontal++
+                count++
+    
+            }
+        }
+
+    }
+    horizontalRight(k, r_q,c_q, n, obstacles)
+
+
+    return count - 8
 }
-// console.log(queensAttack(5,3,4,3,[[5, 5], [4, 2], [2, 3]]))
+console.log(queensAttack(5,3,4,3,[[5, 5], [4, 2], [2, 3]]))//10
+console.log(queensAttack(4,0,4,4))//9
+console.log(queensAttack(8,0,5,4)) //27
+console.log(queensAttack(100000,0,4187,5068,[])) //308369
+// console.log(queensAttack(100000,0,4187,5068,[])) //308369
+
+
 
 function longestString(arr){
     let longest = arr[0]
@@ -1307,6 +1424,123 @@ function theOddTriangle(n){
         counter++
     }
     return total.reduce((a,b) => a + b, 0)
+}
+//  console.log(theOddTriangle(3))
+
+
+//make into string 
+//reverse and turn into num
+//if that day is even add to counter
+function beautifulDays(startDay, endDay, k) {
+    let counter = 0
+
+    for(let currentDay = startDay; currentDay < endDay+1;  currentDay++){
+        let currentReverse = currentDay.toString().split('').reverse().join('')
+        let daySubstract =  Math.abs(currentDay - parseInt(currentReverse,10))
+        if(daySubstract % k === 0){
+            counter ++
+        }
+
+    }
+    return counter
+
+
 
 }
- console.log(theOddTriangle(3))
+// console.log(beautifulDays(20, 23 ,6))
+
+// 0123456789 abcdef, 28 = 1c
+// 21
+// ff pos1: 6, pos2: 239
+//pos *16 then add 2nd pos
+function hexConverter(string){
+    let conversion = {}
+    let hexSplit = string.toUpperCase().split('').splice(1)
+    const R = hexSplit.splice(0,2)
+    const g = hexSplit.splice(0,2).reduce((a,b) => (parseInt(a) * 16) + parseInt(b), 0)
+    const b = hexSplit.reduce((a,b) => (parseInt(a) * 16) + parseInt(b), 0)
+
+    R.forEach(hex => {
+        if(hex === "A" ){
+            R.push(10)
+        } else if(hex === 'B'){
+            R.push(11)
+        } else if(hex === 'C'){
+            R.push(12)
+        } else if(hex === 'D'){
+            R.push(13)
+        } else if(hex === 'E'){
+            R.push(14)
+        } else if(hex === 'F'){
+            R.push(15)
+        }
+    })
+    R.shift()
+    R.shift()
+    let r = R.reduce((a,b) => (a * 16) + b, 0)
+        
+    return({
+        r: r,
+        g: g,
+        b: b
+    })
+}
+// console.log(hexConverter('#ff9933'))
+
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ */
+var twoSum = function(nums, target) {
+    let sum = ((a,b) => a + b)
+    for(let i = 0; i < nums.length; i++){
+        for(let j = i+1; j < nums.length; j++){
+            if(sum(nums[i],nums[j]) === target){
+                return [i,j]
+            }
+        }
+
+    }
+
+    return []
+};
+//  console.log(twoSum([2,7,11,15], 26))
+
+
+
+
+ var twoSum = function(nums, target) {
+    let  numObject = {}
+
+    nums.forEach((num,index) => {
+        if(num in numObject){
+            numObject[num].push(index)
+        } else {
+            numObject[num] = [index]
+        }
+    })
+    for(let i = 0; i < nums.length; i++){
+        let searchNum =  target - nums[i]
+        searchNum = JSON.stringify(searchNum)
+
+        if (searchNum in numObject && searchNum != nums[i]){
+
+            return [i, numObject[searchNum]].flat()
+        } else {
+            if(searchNum in numObject &&  numObject[searchNum].length > 1){
+                return numObject[searchNum]
+            }
+        }
+       
+    }
+};
+// console.log(twoSum([3,3], 6))
+
+
+
+
+
+
+
+
