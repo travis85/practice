@@ -1682,3 +1682,37 @@ function designerPdfViewer(h, word) {
 }
 // console.log(designerPdfViewer([1, 3, 1, 3, 1, 4, 1, 3, 2, 5, 5, 5, 5, 5, 5 ,5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5], 'abc')) //=>9
 
+
+//if it even *2 odd +1
+function utopianTree(n) {
+    let height  = 1
+    let i = 0
+    while(i < n){
+        if(i % 2 === 0){
+           height = height * 2
+           i++
+
+        } else {
+            height += 1
+            i++
+        }
+             
+    }
+    return height
+}
+// console.log(utopianTree(5))
+
+function angryProfessor(k, a) {
+    let arrivalCount = 0
+    a.forEach(student => {
+        if(student <= 0){
+            arrivalCount++
+        }
+    })
+    if(arrivalCount >= k){
+        return 'NO'
+    } else {
+        return 'YES'
+    }
+
+}
