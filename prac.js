@@ -1280,10 +1280,10 @@ function queensAttack(n, k, r_q, c_q, obstacles) {
 
     return count - 8
 }
-console.log(queensAttack(5,3,4,3,[[5, 5], [4, 2], [2, 3]]))//10
-console.log(queensAttack(4,0,4,4))//9
-console.log(queensAttack(8,0,5,4)) //27
-console.log(queensAttack(100000,0,4187,5068,[])) //308369
+// console.log(queensAttack(5,3,4,3,[[5, 5], [4, 2], [2, 3]]))//10
+// console.log(queensAttack(4,0,4,4))//9
+// console.log(queensAttack(8,0,5,4)) //27
+// console.log(queensAttack(100000,0,4187,5068,[])) //308369
 // console.log(queensAttack(100000,0,4187,5068,[])) //308369
 
 
@@ -1494,6 +1494,7 @@ function hexConverter(string){
  */
 var twoSum = function(nums, target) {
     let sum = ((a,b) => a + b)
+    
     for(let i = 0; i < nums.length; i++){
         for(let j = i+1; j < nums.length; j++){
             if(sum(nums[i],nums[j]) === target){
@@ -1538,9 +1539,146 @@ var twoSum = function(nums, target) {
 // console.log(twoSum([3,3], 6))
 
 
+//
+function circularArrayRotation(array, rotation, queries) {
+    let i = 0;
+    let newArr = []
+    while(i < rotation){
+        let lastNum = array.pop()
+        array.unshift(lastNum)
+        i++
+    }
+
+        return  queries.map(index => array[index])
+
+}         
+// console.log(circularArrayRotation([1, 2, 3],2,[0,1,2]))
 
 
 
 
 
+function characterCount(string){
+    let countObject ={}
+
+    for(let char of string){
+        if(char in countObject){
+            countObject[char] += 1
+        } else {
+            countObject[char] = 1
+        }
+    }
+    return countObject
+}
+// console.log(characterCount('jhasvdchqsbdclk'))
+
+//longest word no repaet leytters
+
+function noRepeats(list){
+    let newListWithCount = []
+
+    for(let i =0; i < list.length; i++){
+        let countList = []
+
+        for(let j = 0; j < list[i].length; j++){
+            if(countList.includes(list[i][j])){
+                break;
+            } else {
+                countList += list[i][j]
+            }
+            if(j === list[i].length-1){
+                newListWithCount.push(list[i]) 
+            }
+           
+            
+        }
+        
+    }
+
+
+    
+    return newListWithCount.sort((a, b) => {return b.length - a.length})[0]
+}
+// console.log(noRepeats(['ijasvdiasgvd','iasvihsvv','asoihbvibsVI0','svhuqf','saiudvuibiug','sghetd','gasdeiouytqnk']))
+
+
+function findDigits(n) {
+    let numberSplit = n.toString().split('')
+    let count = 0
+    for(let i = 0; i < numberSplit.length; i++){
+        if(n % Number(numberSplit[i])  === 0){
+            count++
+        }
+
+    }
+    return count
+}
+
+// console.log(findDigits(1120))
+
+function extraLongFactorials(n) {
+    let factorialArr = []
+
+    while(n > 0){
+        factorialArr.push(n--)
+    }
+
+    return factorialArr.reduce((a,b) => a * b)
+}
+// console.log(extraLongFactorials(25))
+
+
+
+function hurdleRace(k, height) {
+    if(k >= Math.max(...height)){
+        return 0
+    } else {
+        return Math.max(...height) - k
+    }
+}
+
+
+function designerPdfViewer(h, word) {
+   const alphaIndex = {
+       a: 0,
+       b: 1,
+       c: 2,
+       d: 3,
+       e: 4,
+       f: 5,
+       g: 6,
+       h: 7,
+       i: 8,
+       j: 9,
+       k: 10,
+       l: 11,
+       m: 12,
+       n: 13,
+       o: 14,
+       p: 15,
+       q: 16,
+       r: 17,
+       s: 18,
+       t: 19,
+       u: 20,
+       v: 21,
+       w: 22,
+       x: 23,
+       y: 24,
+       z: 25
+   }
+
+    let highestNum = 0
+    const wordSplit = word.split('')
+
+    wordSplit.forEach(letter => {
+        const letterIndex = alphaIndex[letter]
+        if( highestNum < h[letterIndex]){
+            highestNum = h[letterIndex] 
+        }
+   })
+
+   return highestNum * wordSplit.length
+}
+// console.log(designerPdfViewer([1, 3, 1, 3, 1, 4, 1, 3, 2, 5, 5, 5, 5, 5, 5 ,5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5], 'abc')) //=>9
 
