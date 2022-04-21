@@ -1142,7 +1142,6 @@ function queensAttack(n, k, r_q, c_q, obstacles) {
     }
     DiagnolUpRight(k, r_q, c_q, n, obstacles)
 
-    
     function DiagnoldownRight(k, horizontal, verticle, boardSize, obstacles){
 
         while(horizontal < boardSize +1 && verticle > 0){
@@ -1238,7 +1237,6 @@ function queensAttack(n, k, r_q, c_q, obstacles) {
     }
     VerticleDown(k, r_q, c_q, obstacles)
 
-
     function horizontalLeft(k, horizontal,verticle, obstacles){
 
         while(horizontal > 0){
@@ -1276,7 +1274,6 @@ function queensAttack(n, k, r_q, c_q, obstacles) {
 
     }
     horizontalRight(k, r_q,c_q, n, obstacles)
-
 
     return count - 8
 }
@@ -1625,7 +1622,7 @@ function extraLongFactorials(n) {
 
     return factorialArr.reduce((a,b) => a * b)
 }
-// console.log(extraLongFactorials(25))
+//  console.log(extraLongFactorials(25))
 
 
 
@@ -1714,5 +1711,91 @@ function angryProfessor(k, a) {
     } else {
         return 'YES'
     }
+}
+
+function viralAdvertising(n) {
+    let count = 5
+    let countArr = []
+    let i = 1
+    while(i < n+1){
+        let dividedCount = Math.floor(count / 2)
+        count = dividedCount * 3
+        countArr.push(dividedCount)
+        i++
+    }
+    return countArr.reduce((a,b) => a + b ,0)
+}
+// console.log(viralAdvertising(4))
+
+function saveThePrisoner(n, m, s) {
+
+    while(m >= 0){
+        m--
+        if(m === 0){
+            return s
+        } else if (s === n){
+            s = 1
+        
+        } else {
+            s++
+        }            
+    }
 
 }
+// console.log(saveThePrisoner(7, 19, 2))//6
+// console.log(saveThePrisoner(5, 2, 1))//2
+
+//starting @100
+//jump 2 indexes 
+//if index === 1 (-3 from current count)
+// else -1 from current count
+// (index + k) % c.length = i
+
+function jumpingOnClouds(c, k) {
+    let energy = 100
+    let i = k
+    let index = k % c.length
+
+    while(index !== 0){
+
+        if(c[index] === 1){
+            energy += -3
+            index = (k += i) % c.length
+
+        }else {
+            energy += -1
+            index = (k += i) % c.length
+
+        }
+    }
+
+    if(c[0] === 1){
+        return energy -3
+    } else {
+        return energy -1
+    }
+}
+// console.log(jumpingOnClouds([0,1,0],2))
+// console.log(jumpingOnClouds([1, 1, 1, 0, 1, 1, 0, 0, 0, 0],3))
+
+
+function jumpingOnClouds(c) {
+    let count = 0
+    let jump = 0
+
+    while(jump < c.length+1){
+            
+        if(c[jump] !== 1){
+            jump += 2
+            count++
+        } else {
+            jump += 1
+            count++
+        }
+    }
+    return count -1
+}
+
+// console.log(jumpingOnClouds([0 ,0 ,0 ,0 ,1 ,0]))//3
+// console.log(jumpingOnClouds([0, 0, 1, 0, 0, 1, 0]))//4
+// console.log(jumpingOnClouds([0, 0, 1, 0, 0, 0, 0, 1, 0, 0]))//6 0 0 1 0 0 1 0
