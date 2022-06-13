@@ -8,44 +8,32 @@
  * @param {string[]} strs
  * @return {string}
 */
-var longestCommonPrefix = function (strs) {
+var longestCommonPrefix = function (strs) { 
     let solution = ''
-    
     let i = 0
-    let j = 0
-    let p = 0
-    let prefix = strs[0].split('')
-    if (strs[0] === '') {
-        return ''
+    let heldIndex = 0
+    let heldLetter = strs[0][0]
+    if (strs.length === 1) {
+        return strs[0]
     } else {
-        if (strs.length === 1) {
-           return strs[0]
-       }
-    }
-    while (i < strs.length) {
-        if (strs[i][j] !== prefix[p]) {
-            break
-
-        } else if (i === strs.length-1 && j === strs[i].length-1) {
-            return strs[0]
-        } else if (strs[i][j] === prefix[p] && i === strs.length-1 ) {
-            solution += strs[i][j]
-            i = 0
-            j++
-            p++
-        } else {
-            if (strs[i][j] === prefix[p]) {
-                i++
-            }
+        if (strs[0] === ''){
+            return solution
         }
-        
     }
-    return solution 
-};
-console.log(longestCommonPrefix(["flower","flower","flower","flower"]))//'fl'
-console.log(longestCommonPrefix(["ab", "a"]))//'fl'
-
-// console.log(longestCommonPrefix(["dog", "racecar", "car"]))//''
-
-//loop and set var to a letter 
-//continue adding to that var if remains true
+    while (heldLetter === strs[i][heldIndex]) {
+        if (i === strs.length - 1 && heldIndex === strs[i].length) {
+            return solution
+        } else if (i === strs.length - 1) {
+            solution += heldLetter
+            i = 0 
+            heldIndex++
+            heldLetter = strs[i][heldIndex]            
+        } 
+        i++
+    }
+    return solution
+}
+console.log(longestCommonPrefix(["flower","flower","flower","flower"]))//'flower'
+console.log(longestCommonPrefix(["a"]))//'a'
+//hold each letter in var
+//if i === 
