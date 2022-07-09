@@ -16,12 +16,12 @@ function listedOnlyOnce(arr) {
             arrToObject[num] = 1
         }
     });
-
-    for (let num in arrToObject){
-        if (arrToObject[num] === 1) {
-            return num
-        }
-    }
+return Object.keys(arrToObject).reduce(function(a, b){ return arrToObject[a] < arrToObject[b] ? a : b });
+    // for (let num in arrToObject){
+    //     if (arrToObject[num] === 1) {
+    //         return num
+    //     }
+    // }
 }
 // console.log(listedOnlyOnce([4, 1, 2, 1, 2]))
-console.log(listedOnlyOnce([4, 1, 4,1, 1, 2]))
+console.log(listedOnlyOnce([4, 1,2,1, 1, 2,4]))
